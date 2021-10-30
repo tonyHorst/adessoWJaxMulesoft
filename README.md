@@ -3,7 +3,7 @@ Mulesoft for Java Developers
 
 ## Presenters
 
-Uday Shankar, Anand Shankar <Anand-Shankar.Uday-Shankar@adesso.de>
+Uday Shankar, Anand Shankar <Anand-Shankar.Uday-Shankar@adesso.de><br />
 Horst, Tony <Tony.Horst@adesso.de>
 
 ## Company (If you want to join us - we can offer much more then 0 vacation days and Grocery brands as salary ;))
