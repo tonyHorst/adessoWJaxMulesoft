@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: S-EMPLOYEE-API-WJAX
+version: v1
+/employee:
+  get:
+    description: Get all employees with details
+    queryParameters:
+      employee-type:
+        type: string
+        required: false
