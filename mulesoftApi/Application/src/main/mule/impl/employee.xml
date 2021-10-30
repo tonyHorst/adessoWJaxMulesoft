@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="9742ca76-709d-4598-989b-d99b48474e13" >
+		<http:request-connection host='#["localhost"]' port="#[8080]" />
+	</http:request-config>
+	<sub-flow name="employeeSub_Flow" doc:id="8a0c142f-91f9-449c-86ab-e39f38e53c26" >
+		<http:request method="GET" doc:name="Request" doc:id="a08c1b24-1af1-4851-906a-8ffeb546f677" config-ref="HTTP_Request_configuration" path="/employees" target="requestResponse"/>
+		<logger level="INFO" doc:name="HTTP Request Result Logger" doc:id="64852efc-0f0f-40c5-87ed-3527807c91f3" message="#[vars.requestResponse]"/>
+		<foreach doc:name="For Each" doc:id="e6ffc430-906e-4b21-9f21-f851af44e849" collection="#[vars.requestResponse]">
+			<logger level="INFO" doc:name="Logger" doc:id="39fd8576-db12-4dd9-a92c-5a375fbbe858" message="#[payload]"/>
+		</foreach>
+	</sub-flow>
+</mule>
