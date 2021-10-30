@@ -13,6 +13,8 @@ public class Employee {
 
     private UUID id = UUID.randomUUID();
     @NonNull
+    private int databaseId;
+    @NonNull
     private String name;
     @NonNull
     private EType type;
