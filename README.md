@@ -10,6 +10,11 @@ Horst, Tony <Tony.Horst@adesso.de>
 
 https://www.adesso.de/de/jobs-karriere/unsere-stellenangebote/
 
+## Toolset
+
+Anypoint Studio ==> https://www.mulesoft.com/platform/studio<br />
+Anypoint Platform ==> https://anypoint.mulesoft.com
+
 ## Navigation
 
 ### Folder: JavaEmployeeMicroservice
@@ -31,3 +36,10 @@ Here you can find the presentation slides - for KeyNote, PowerPoint and PDF
 ### Folder: sql
 
 The mysql init scripts with our expected employees. Feel free to extend this ;)
+
+## More links to know more about the magical world of MuleSoft :-)
+
+https://training.mulesoft.com/learning-path ==> Developer Training and course. This is free, the certification not :-)<br />
+https://docs.mulesoft.com/mule-runtime/4.4/dataweave ==> DataWeave Documentation<br />
+https://www.youtube.com/user/mulesoftvids/videos ==> Videos - directly from Mulesoft
+https://meetups.mulesoft.com/events/#/list ==> Meetups and events around the world<br />
