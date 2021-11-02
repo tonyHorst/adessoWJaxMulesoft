@@ -7,3 +7,9 @@ db:
   database: "sql11447598"
   username: "sql11447598"
   password: "dXalAnII9D"
+  
+employee_system:
+  host: "cd4b-178-13-116-180.ngrok.io"
+  port: "80"
+  protocol: "HTTP"
+  path: "/employees"

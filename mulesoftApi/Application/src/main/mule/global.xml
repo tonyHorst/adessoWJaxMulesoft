@@ -9,7 +9,7 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="88f21f9c-ee0c-4041-97cc-08209c046695" >
-		<http:request-connection host='#["localhost"]' port="#[8080]" />
+		<http:request-connection host='${employee_system.host}' port="${employee_system.port}" />
 	</http:request-config>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="652341b1-b0e2-4dad-b43a-47e4bfbd56b8" >
 		<db:my-sql-connection host='${db.host}' port="${db.port}" user='${db.username}' database='${db.database}' password="${db.password}"/>

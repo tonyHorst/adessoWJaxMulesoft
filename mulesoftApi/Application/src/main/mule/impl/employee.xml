@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<sub-flow name="employeeSub_Flow" doc:id="8a0c142f-91f9-449c-86ab-e39f38e53c26" >
-		<http:request method="GET" doc:name="Request" doc:id="a08c1b24-1af1-4851-906a-8ffeb546f677" config-ref="HTTP_Request_configuration" path="/employees" target="requestResponse"/>
+		<http:request method="GET" doc:name="Request Employee System" doc:id="a08c1b24-1af1-4851-906a-8ffeb546f677" config-ref="HTTP_Request_configuration" path="${employee_system.path}" target="requestResponse"/>
 		<logger level="INFO" doc:name="HTTP Request Result Logger" doc:id="64852efc-0f0f-40c5-87ed-3527807c91f3" message="#[vars.requestResponse]"/>
 		<ee:transform doc:name="Set outputArray" doc:id="0f34f02e-4290-431d-8b9c-93de75ced416" >
 			<ee:message >
@@ -22,7 +22,7 @@ output application/java
 		<foreach doc:name="For Each" doc:id="e6ffc430-906e-4b21-9f21-f851af44e849" collection="#[vars.requestResponse]">
 			<flow-ref doc:name="get-info-from-database" doc:id="2f4b51e1-d661-466e-b12d-a718c7f8fac7" name="get-info-from-database"/>
 		</foreach>
-		<ee:transform doc:name="Transform Message" doc:id="c38e329f-8611-4d48-8459-c9854358cbce" >
+		<ee:transform doc:name="Response Builder" doc:id="c38e329f-8611-4d48-8459-c9854358cbce" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -30,9 +30,9 @@ output application/json
 vars.outputArray]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Exit Logger" doc:id="3624a3a4-9a3b-4ea4-9bb2-bab0510ada5e" message="Employee request successful"/>
 	</sub-flow>
 	<flow name="get-info-from-database" doc:id="a8e6b15b-e435-4f0c-b1ac-11cd90845554" >
-		<logger level="INFO" doc:name="Logger" doc:id="39fd8576-db12-4dd9-a92c-5a375fbbe858" message="#[payload]" />
 		<ee:transform doc:name="Store payload" doc:id="1133d59d-f24b-4d9a-a713-cf70ca1c213d">
 				<ee:message>
 				</ee:message>
@@ -47,7 +47,10 @@ payload]]></ee:set-variable>
 				<db:sql><![CDATA[SELECT 
 vacation_days_taken, vacation_days_left, salary 
 FROM employee_optional_data 
-WHERE employee_id = 1]]></db:sql>
+WHERE employee_id = :employee_id]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	employee_id : payload.databaseId as String default null
+}]]]></db:input-parameters>
 			</db:select>
 		<ee:transform doc:name="Transform result" doc:id="675031c0-c3f0-426d-8c88-d0a920711431">
 				<ee:message>
@@ -60,9 +63,9 @@ output application/json
    	"type":vars.currentValue."type",
    	"gender":vars.currentValue.gender,
    	"birthday":vars.currentValue.birthday,
-   	"vacationDaysTaken": payload.vacation_days_taken,
-   	"vacationDaysLeft": payload.vacation_days_left,
-   	"salary": payload.vacation_days_left
+   	"vacationDaysTaken": payload.vacation_days_taken[0] as String,
+   	"vacationDaysLeft": payload.vacation_days_left[0] as String,
+   	"salary": payload.vacation_days_left[0] as String
 }]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
