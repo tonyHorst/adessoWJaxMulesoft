@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="88f21f9c-ee0c-4041-97cc-08209c046695" >
 		<http:request-connection host='#["localhost"]' port="#[8080]" />
 	</http:request-config>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="652341b1-b0e2-4dad-b43a-47e4bfbd56b8" >
-		<db:my-sql-connection host='#["localhost"]' port="#[3306]" user='#["root"]' database='#["ADESSO_WJAX_EMPLOYEES"]' />
+		<db:my-sql-connection host='${db.host}' port="${db.port}" user='${db.username}' database='${db.database}' password="${db.password}"/>
 	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="b68f89c5-2663-4efe-b1d8-0d94f10096d7" file="dev/dev-config.yaml" />
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="false" doc:name="API Autodiscovery" doc:id="0ed9ae83-544f-4d39-8407-bfe2ad1dd55f" flowRef="s-employee-api-wjax-main" />
 	</mule>
