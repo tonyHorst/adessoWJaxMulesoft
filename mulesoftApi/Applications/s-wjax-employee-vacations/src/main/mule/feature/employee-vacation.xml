@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="employee-vacationSub_Flow" doc:id="f1869ec0-1722-47e7-b0ad-668bbd23a15d" >
+		<logger level="INFO" doc:name="Initial Logger" doc:id="4e7b58eb-6247-48ff-a507-11b3388505fa" message="Fetch Record started"/>
+		<set-variable value="#[attributes.uriParams.'employee_id']" doc:name="Set Variable employeeIdVar" doc:id="310329bb-89b0-4170-be3a-15cf5d8d17a7" variableName="employeeIdVar"/>
+		<db:select doc:id="46393933-f108-40b1-be47-59f0b08db2a5" doc:name="Select Vacation details from Database" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT 
+vacation_days_taken, vacation_days_left, salary 
+FROM employee_optional_data 
+WHERE employee_id = :employee_id]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	employee_id: vars.employeeIdVar as String default null
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Build Response" doc:id="697cd1f1-cd9f-4bcc-b6c1-e9f90c92e74d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	vacation_days_taken: payload[0].vacation_days_taken,
+	vacation_days_left: payload[0].vacation_days_left,
+	salary: payload[0].salary
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Final Logger" doc:id="e9ac19a1-3e4d-4c44-952c-3fb91ad8a659" message="Record retrieved"/>
+	</sub-flow>
+</mule>

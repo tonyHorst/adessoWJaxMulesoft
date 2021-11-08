@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_64ffee09_26cb_4033_9c49_4f2c0d1c234e_Output_Variables_requestResponse = Any
+

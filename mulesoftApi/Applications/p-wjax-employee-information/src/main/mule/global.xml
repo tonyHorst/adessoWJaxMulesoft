@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="Employee_Details_Request_configuration" doc:name="HTTP Request configuration" doc:id="14344d46-7089-45f5-a4d7-ac40781bb4da" basePath="${employee_system.base_path}">
+		<http:request-connection host="${employee_system.host}" port="${employee_system.port}" />
+		<http:default-headers >
+			<http:default-header key="client_id" value="${employee_system.client_id}" />
+			<http:default-header key="client_secret" value="${employee_system.client_secret}" />
+		</http:default-headers>
+	</http:request-config>
+	<http:request-config name="EMployee_vacation_Request_configuration" doc:name="HTTP Request configuration" doc:id="43b0f571-24ea-4d8f-b3cb-a4862991b859" basePath="${employee_vacation.base_path}" >
+		<http:request-connection host="${employee_vacation.host}" port="${employee_vacation.port}" />
+		<http:default-headers >
+			<http:default-header key="client_id" value="${employee_vacation.client_id}" />
+			<http:default-header key="client_secret" value="${employee_vacation.client_secret}" />
+		</http:default-headers>
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="2002ed49-b53e-47a4-a352-b1c6cc9432b5" file="dev/dev-config.yaml" />
+</mule>

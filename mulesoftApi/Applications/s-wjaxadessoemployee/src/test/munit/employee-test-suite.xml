@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<munit:config name="employee-test-suite.xml" />
+	<munit:test name="employee-test-suite-employeeSub_FlowTest" doc:id="65f397f7-2ca7-467b-b055-4f44a5f83b56" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Set mocked results" doc:id="bf4696e9-2e5a-4b9a-80d5-0068d65d2b6e" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="restResult" ><![CDATA[%dw 2.0
+output application/json
+---
+[
+{
+"id": "4e97ee38-ece9-4801-a3af-874016f6c40e",
+"databaseId": 1,
+"name": "Hans",
+"type": "BOSS",
+"gender": "MAN",
+"birthday": "1985-06-20"
+},
+{
+"id": "4152ea17-cc51-4981-9223-1e284835bb87",
+"databaseId": 2,
+"name": "Bettina",
+"type": "DEVELOPER",
+"gender": "WOMAN",
+"birthday": "1989-06-20"
+},
+{
+"id": "ba1461eb-7ac6-4be6-baf0-0686c7e42aee",
+"databaseId": 3,
+"name": "Klaus",
+"type": "PRODUCT_OWNER",
+"gender": "DIVERS",
+"birthday": "1945-05-08"
+}
+]]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<munit-tools:mock-when doc:name="Spring Boot Request" doc:id="3e36a9fa-e714-4626-8609-cceb22419831" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="84537678-070b-416d-8dbc-5fb248b54390" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[vars.restResult]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to employeeFlow" doc:id="a30fa4c4-dbf7-4fdf-89da-806a443697f7" name="employee-detailsFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Logger" doc:id="a8a40337-6978-4ac5-855e-43ffd4f710ef" message="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+
+</mule>

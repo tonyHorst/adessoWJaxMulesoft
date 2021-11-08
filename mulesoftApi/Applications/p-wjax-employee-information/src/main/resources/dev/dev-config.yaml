@@ -1,0 +1,20 @@
+api:
+  id: "17394805"
+
+employee_vacation:
+  host: "s-wjax-employee-vacations.us-e2.cloudhub.io"
+  port: "80"
+  protocol: "HTTP"
+  path: "/employee"
+  client_id: "8c8205b05ca043e9a8521734468748e7"
+  client_secret: "e8Ca2b6e08E14a3aa8311CeaBb0B3123"
+  base_path: "/api"
+  
+employee_system:
+  host: "s-wjax-emplyoee-api.us-e2.cloudhub.io"
+  port: "80"
+  protocol: "HTTP"
+  path: "/employee"
+  client_id: "77208e9039a24eb08d3d6e9c9c617d43"
+  client_secret: "bb3c9dBF89844f57A7BC4ECdE7c821DC"
+  base_path: "/api"

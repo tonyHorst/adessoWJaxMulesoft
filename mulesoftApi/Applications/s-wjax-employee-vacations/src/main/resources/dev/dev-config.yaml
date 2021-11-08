@@ -1,0 +1,9 @@
+api:
+  id: "17395686"
+
+db:
+  host: "sql11.freesqldatabase.com"
+  port: "3306"
+  database: "sql11449078"
+  username: "sql11449078"
+  password: "EtaeJScjlH"

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "c6a1cb63-efcb-4dc0-8c9a-0adbf6fe0ef9",
+    "name": "Hans",
+    "type": "BOSS",
+    "gender": "MAN",
+    "birthday": "1985-06-20",
+    "vacationDaysTaken": "15",
+    "vacationDaysLeft": "15",
+    "salary": "15"
+  },
+  {
+    "id": "2a89358a-9143-4b74-8bcc-1e91d01879b7",
+    "name": "Bettina",
+    "type": "DEVELOPER",
+    "gender": "WOMAN",
+    "birthday": "1989-06-20",
+    "vacationDaysTaken": "100",
+    "vacationDaysLeft": "264",
+    "salary": "264"
+  },
+  {
+    "id": "cd8b1a19-255b-425e-a851-f30bf813df2f",
+    "name": "Klaus",
+    "type": "PRODUCT_OWNER",
+    "gender": "DIVERS",
+    "birthday": "1945-05-08",
+    "vacationDaysTaken": "0",
+    "vacationDaysLeft": "0",
+    "salary": "0"
+  }
+]

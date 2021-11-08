@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="healthFlow" doc:id="8988bb48-80ee-4c11-8192-36d68a517b1f" >
+		<http:listener doc:name="Listener" doc:id="afa335c2-f015-4bea-84d8-dd38949b295c" config-ref="wjax-employee-vacation-httpListenerConfig" path="/health"/>
+		<set-payload value="#['UP']" doc:name="ALIVE" doc:id="f69728c3-a48d-4d54-b129-6d97b5283293" />
+	</flow>
+</mule>

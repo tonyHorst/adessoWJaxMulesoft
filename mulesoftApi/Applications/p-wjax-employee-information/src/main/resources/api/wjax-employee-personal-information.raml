@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Wjax Employee Personal Information
+version: v1
+
+
+
+/employee:
+  get:
+    description: Get all employee details
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+
+    queryParameters:
+      employee-type:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+              example: !include examples/employee-information-success-response.json
+        
+      401:  
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="employee-detailsFlow" doc:id="852eea44-bf85-4822-9ce8-e59bfc01a82a" >
+		<logger level="INFO" doc:name="Initial Logger" doc:id="457d4e09-25ae-4e04-afea-9209c8c2ee63" />
+		<http:request method="GET" doc:name="Request Employee Details" doc:id="84537678-070b-416d-8dbc-5fb248b54390" config-ref="HTTP_Request_configuration" path="${employee_system.path}"/>
+		<ee:transform doc:name="Build Response" doc:id="e65194d2-4678-4a88-9ca3-43b979bdf9c6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ((item, index) -> {
+    id: item.id,
+    name: item.name,
+    'type': item.'type',
+    gender: item.gender,
+    birthday: item.birthday
+})]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Final Logger" doc:id="4dd47804-bce7-4215-8c8f-ec1248ebc93c" />
+	</flow>
+</mule>

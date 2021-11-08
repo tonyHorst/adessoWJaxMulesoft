@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="employee-informationFlow" doc:id="64ffee09-26cb-4033-9c49-4f2c0d1c234e" >
+		<http:request method="GET" doc:name="Request Employee Details" doc:id="da5bcc88-40e5-486d-8ca2-44ae0fa651ed" target="requestResponse" config-ref="Employee_Details_Request_configuration" path="${employee_system.path}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]">
+		</http:request>
+		<set-variable value="#[[]]" doc:name="Set Output Array" doc:id="53f5f500-4dfe-4a7f-9db8-0a0fbc35b3cc" variableName="outputArray"/>
+		<foreach doc:name="For Each" doc:id="78be60eb-67b9-4f88-acff-fb9be5855b66" collection="#[vars.requestResponse]">
+			<flow-ref doc:name="get-vacation-information" doc:id="1ab29412-61bb-45f3-80ac-2e49e90dbb99" name="get-vacation-information"/>
+		</foreach>
+		<ee:transform doc:name="Build Response" doc:id="e071859f-9335-42f8-aec2-aa76b397b534" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.outputArray]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<sub-flow name="get-vacation-information" doc:id="2dbaf54d-5cad-4a89-b209-e6e86008bcef" >
+		<ee:transform doc:name="Transform Message" doc:id="bcda86ec-6374-456e-b472-1a79eef225e3" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="currentValue" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request Employee Vacation" doc:id="eeb96ea2-24f1-49a7-8f98-1f0809546238" url="#['http://s-wjax-employee-vacations.us-e2.cloudhub.io:80/api/employee/' ++ vars.counter as String]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "e8Ca2b6e08E14a3aa8311CeaBb0B3123",
+	"client_id" : "8c8205b05ca043e9a8521734468748e7"
+}]]]></http:headers>
+		</http:request>
+		<ee:transform doc:name="Transform Result" doc:id="900e37a9-3953-42cc-a9e6-1d7732dc95f8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"id":vars.currentValue.id,
+	"name":vars.currentValue.name,
+   	"type":vars.currentValue."type",
+   	"gender":vars.currentValue.gender,
+   	"birthday":vars.currentValue.birthday,
+   	"vacationDaysTaken": payload.vacation_days_taken as String,
+   	"vacationDaysLeft": payload.vacation_days_left as String,
+   	"salary": payload.salary as String
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Store Result" doc:id="1f91d07b-b5f4-41fa-9ea7-250f58272cf0" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="outputArray" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.outputArray + payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+</mule>
