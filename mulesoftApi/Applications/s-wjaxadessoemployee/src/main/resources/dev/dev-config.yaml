@@ -6,7 +6,7 @@ db:
   port: "3306"
   database: "sql11447598"
   username: "sql11447598"
-  password: "dXalAnII9D"
+  password: "secret"
   
 employee_system:
   host: "1a4e-178-13-116-180.ngrok.io"

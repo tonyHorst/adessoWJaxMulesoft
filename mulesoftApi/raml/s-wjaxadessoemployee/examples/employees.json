@@ -4,29 +4,20 @@
       "name":"Hans",
       "type":"BOSS",
       "gender":"MAN",
-      "birthday":"1985-06-20",
-      "vacationDaysTaken": "100",
-      "vacationDaysLeft": "264",
-      "salary": "DoNotSpeakAboutIt"
+      "birthday":"1985-06-20"
    },
    {
       "id":"3b795511-447e-4034-a56d-569be8715d40",
       "name":"Bettina",
       "type":"DEVELOPER",
       "gender":"WOMAN",
-      "birthday":"1989-06-20",
-      "vacationDaysTaken": "0",
-      "vacationDaysLeft": "0",
-      "salary": "Grocery brands"
+      "birthday":"1989-06-20"
    },
    {
       "id":"ad37b548-7230-44fa-9481-c2392263306a",
       "name":"Klaus",
       "type":"PRODUCT_OWNER",
       "gender":"DIVERS",
-      "birthday":"1945-05-08",
-      "vacationDaysTaken": "30",
-      "vacationDaysLeft": "0",
-      "salary": "100.000"
+      "birthday":"1945-05-08"
    }
 ]
